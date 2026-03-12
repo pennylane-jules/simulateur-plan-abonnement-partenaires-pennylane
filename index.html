@@ -187,7 +187,7 @@
           const canProceed = () => {
             switch (state.step) {
               case 0: return state.answers.comptaDansPL !== "";
-              case 1: return state.answers.comptaDansPL === "oui" ? state.answers.nbComptables > 0 && state.answers.usersGestion > 0 : state.answers.usersGestion > 0;
+              case 1: return (state.answers.nbComptables + state.answers.usersGestion) > 0;
               case 2: return state.answers.fonctionnalitesPME.length > 0;
               case 3: return state.answers.facturesAnnuelles > 0;
               case 4: return state.answers.fonctionnalitesEssentiel.length > 0;
