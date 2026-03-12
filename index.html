@@ -3,34 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur Plan Pennylane - Partenaires Prescripteurs</title>
-    
-    <!-- React & ReactDOM -->
+    <title>Simulateur Plan Pennylane</title>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel pour transpiler JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts - Manrope -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
+    <style>body { font-family: 'Manrope', sans-serif; margin: 0; }</style>
 </head>
 <body>
     <div id="root"></div>
-
     <script type="text/babel">
         const { useState } = React;
 
@@ -51,75 +33,61 @@
           border: "#96EAD3"
         };
 
-        // UI Components
         const Card = ({ children, className = "", style = {} }) => (
-            <div className={`rounded-lg border bg-white shadow-sm ${className}`} style={style}>{children}</div>
+          <div className={`rounded-lg border bg-white shadow-sm ${className}`} style={style}>{children}</div>
         );
         const CardHeader = ({ children }) => <div className="p-6 pb-4">{children}</div>;
         const CardTitle = ({ children, className = "" }) => <h3 className={`text-2xl font-bold ${className}`}>{children}</h3>;
         const CardContent = ({ children, className = "" }) => <div className={`p-6 pt-0 ${className}`}>{children}</div>;
-        
+
         const Button = ({ children, onClick, disabled = false, variant = "default", className = "", style = {} }) => {
-            const baseStyle = "px-4 py-2 rounded-lg font-semibold transition-all duration-300";
-            const variantStyle = variant === "outline" 
-                ? "border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-                : "";
-            return (
-                <button 
-                    onClick={onClick} 
-                    disabled={disabled} 
-                    className={`${baseStyle} ${variantStyle} ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${className}`} 
-                    style={style}
-                >
-                    {children}
-                </button>
-            );
+          const base = "px-4 py-2 rounded-lg font-semibold transition-all duration-300";
+          const outline = variant === "outline" ? "border-2 border-slate-300 bg-white text-slate-700 hover:bg-slate-50" : "";
+          return (
+            <button onClick={onClick} disabled={disabled}
+              className={`${base} ${outline} ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${className}`}
+              style={style}>
+              {children}
+            </button>
+          );
         };
-        
+
         const Badge = ({ children, className = "" }) => <span className={`inline-block rounded-full ${className}`}>{children}</span>;
 
-        // Icons
-        const CheckCircle2 = ({ className, style }) => (
-            <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
+        const IconCheck = ({ className, style }) => (
+          <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
         );
-        const ArrowRight = ({ className }) => (
-            <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-            </svg>
+        const IconArrowRight = ({ className }) => (
+          <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
         );
-        const ArrowLeft = ({ className }) => (
-            <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-            </svg>
+        const IconArrowLeft = ({ className }) => (
+          <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+          </svg>
         );
-        const Sparkles = ({ className, style }) => (
-            <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 3v18M3 12h18M6.6 6.6l10.8 10.8M6.6 17.4L17.4 6.6" />
-            </svg>
+        const IconSparkles = ({ className, style }) => (
+          <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M12 3v18M3 12h18M6.6 6.6l10.8 10.8M6.6 17.4L17.4 6.6"/>
+          </svg>
         );
-        const Building2 = ({ className, style }) => (
-            <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="2" y="7" width="20" height="14" rx="2" />
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-            </svg>
+        const IconBuilding = ({ className, style }) => (
+          <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
         );
-        const TrendingUp = ({ className, style }) => (
-            <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
-                <polyline points="17 6 23 6 23 12" />
-            </svg>
+        const IconTrending = ({ className, style }) => (
+          <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+          </svg>
         );
-        const Info = ({ className, style }) => (
-            <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="16" x2="12" y2="12" />
-                <line x1="12" y1="8" x2="12.01" y2="8" />
-            </svg>
+        const IconInfo = ({ className, style }) => (
+          <svg className={className} style={style} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
         );
 
         const SimulateurPlanPennylane = () => {
@@ -137,7 +105,6 @@
             },
             result: null
           });
-
           const [showEmailPage, setShowEmailPage] = useState(false);
           const [emailCopied, setEmailCopied] = useState(false);
           const maxSteps = 6;
@@ -145,179 +112,74 @@
           const calculateResult = (answers) => {
             const totalUsers = answers.nbComptables + answers.usersGestion + answers.usersEmployes;
             const gestionPlusCompta = answers.usersGestion + answers.nbComptables;
-            
-            if (totalUsers > 10 || gestionPlusCompta > 5 || answers.nbComptables > 1 || 
-                answers.facturesAnnuelles > 3600 || 
+            if (totalUsers > 10 || gestionPlusCompta > 5 || answers.nbComptables > 1 ||
+                answers.facturesAnnuelles > 3600 ||
                 (answers.fonctionnalitesPME.length > 0 && !answers.fonctionnalitesPME.includes("aucune"))) {
               return {
-                plan: "PME sur mesure",
-                palier: 0,
-                prix: 0,
-                usersIncluded: "Utilisateurs illimités",
-                facturesMax: "Factures illimitées",
-                fonctionnalites: [
-                  "Toutes les fonctionnalités Premium + CI",
-                  "Fonction groupe et gestion multi-entités",
-                  "EBICS T et paiements avancés",
-                  "API PME complète",
-                  "Circuits de validation multiniveaux",
-                  "Demandes d'achat et de paiement",
-                  "Account Manager dédié"
-                ]
+                plan: "PME sur mesure", palier: 0, prix: 0,
+                usersIncluded: "Utilisateurs illimités", facturesMax: "Factures illimitées",
+                fonctionnalites: ["Toutes les fonctionnalités Premium + CI","Fonction groupe et gestion multi-entités","EBICS T et paiements avancés","API PME complète","Circuits de validation multiniveaux","Demandes d'achat et de paiement","Account Manager dédié"]
               };
             }
-
             let palier = 1;
-            const effectiveGestion = gestionPlusCompta;
-            
-            if (effectiveGestion === 2 || (answers.usersEmployes >= 1 && answers.usersEmployes <= 3)) {
-              palier = Math.max(palier, 2);
-            }
-            if (effectiveGestion >= 3 || answers.usersEmployes >= 4) {
-              palier = Math.max(palier, 3);
-            }
-            if (answers.facturesAnnuelles >= 1200 && answers.facturesAnnuelles < 2400) {
-              palier = Math.max(palier, 2);
-            }
-            if (answers.facturesAnnuelles >= 2400) {
-              palier = Math.max(palier, 3);
-            }
+            const eg = gestionPlusCompta;
+            if (eg === 2 || (answers.usersEmployes >= 1 && answers.usersEmployes <= 3)) palier = Math.max(palier, 2);
+            if (eg >= 3 || answers.usersEmployes >= 4) palier = Math.max(palier, 3);
+            if (answers.facturesAnnuelles >= 1200 && answers.facturesAnnuelles < 2400) palier = Math.max(palier, 2);
+            if (answers.facturesAnnuelles >= 2400) palier = Math.max(palier, 3);
 
             const usersIncluded = [];
             if (palier === 1) usersIncluded.push("1 utilisateur Gestion");
             else if (palier === 2) usersIncluded.push("Jusqu'à 2 utilisateurs Gestion");
             else usersIncluded.push("Jusqu'à 5 utilisateurs Gestion");
-            
             if (palier === 2) usersIncluded.push("Jusqu'à 3 utilisateurs Employés");
             else if (palier === 3) usersIncluded.push("Jusqu'à 5 utilisateurs Employés");
-            
             if (answers.nbComptables > 0) usersIncluded.push("1 utilisateur Comptable interne");
 
-            const facturesMax = palier === 1 ? "1 200 factures/an" : 
-                               palier === 2 ? "2 400 factures/an" : 
-                               "3 600 factures/an";
-
-            let plan = "";
-            let fonctionnalites = [];
-
+            const facturesMax = palier === 1 ? "1 200 factures/an" : palier === 2 ? "2 400 factures/an" : "3 600 factures/an";
+            let plan = "", fonctionnalites = [];
             if (answers.comptaDansPL === "oui") {
               plan = "Premium + Module Comptable";
-              fonctionnalites = [
-                "Toutes les fonctionnalités Premium",
-                "Saisie comptable complète",
-                "Déclarations TVA et liasse fiscale",
-                "Module de révision et cut-off",
-                "États financiers personnalisables"
-              ];
+              fonctionnalites = ["Toutes les fonctionnalités Premium","Saisie comptable complète","Déclarations TVA et liasse fiscale","Module de révision et cut-off","États financiers personnalisables"];
             } else {
-              const hasPremium = answers.fonctionnalitesPremium.length > 0 && 
-                                !answers.fonctionnalitesPremium.includes("aucune");
-              const hasEssentiel = answers.fonctionnalitesEssentiel.length > 0 && 
-                                  !answers.fonctionnalitesEssentiel.includes("aucune");
-              
-              if (hasPremium) {
-                plan = "Premium";
-                fonctionnalites = [
-                  "Circuits de validation",
-                  "Rapports analytiques avancés",
-                  "Data Sharing",
-                  "Tableaux de bords personnalisables"
-                ];
-              } else if (hasEssentiel) {
-                plan = "Essentiel";
-                fonctionnalites = [
-                  "Relances automatiques",
-                  "Factures récurrentes",
-                  "Intégrations clé-en-main",
-                  "Notes de frais",
-                  "Analytique et prévisionnel"
-                ];
-              } else {
-                plan = "Basique";
-                fonctionnalites = [
-                  "Facturation clients illimitée",
-                  "Gestion des dépenses",
-                  "Paiement fournisseurs",
-                  "Compte Pro avec cartes"
-                ];
-              }
+              const hasPremium = answers.fonctionnalitesPremium.length > 0 && !answers.fonctionnalitesPremium.includes("aucune");
+              const hasEssentiel = answers.fonctionnalitesEssentiel.length > 0 && !answers.fonctionnalitesEssentiel.includes("aucune");
+              if (hasPremium) { plan = "Premium"; fonctionnalites = ["Circuits de validation","Rapports analytiques avancés","Data Sharing","Tableaux de bords personnalisables"]; }
+              else if (hasEssentiel) { plan = "Essentiel"; fonctionnalites = ["Relances automatiques","Factures récurrentes","Intégrations clé-en-main","Notes de frais","Analytique et prévisionnel"]; }
+              else { plan = "Basique"; fonctionnalites = ["Facturation clients illimitée","Gestion des dépenses","Paiement fournisseurs","Compte Pro avec cartes"]; }
             }
-
-            return {
-              plan,
-              palier,
-              prix: PRICING_CONFIG.plans[plan]?.[palier - 1] || 0,
-              usersIncluded: usersIncluded.join(", "),
-              facturesMax,
-              fonctionnalites
-            };
+            return { plan, palier, prix: PRICING_CONFIG.plans[plan]?.[palier - 1] || 0, usersIncluded: usersIncluded.join(", "), facturesMax, fonctionnalites };
           };
 
           const goNext = () => {
-            if (state.step === 0) {
-              setState({ ...state, step: 1 });
-              return;
-            }
+            if (state.step === 0) { setState({ ...state, step: 1 }); return; }
             if (state.step === 1) {
               const totalUsers = state.answers.nbComptables + state.answers.usersGestion + state.answers.usersEmployes;
               const gestionPlusCompta = state.answers.usersGestion + state.answers.nbComptables;
-              
               if (totalUsers > 10 || gestionPlusCompta > 5 || state.answers.nbComptables > 1) {
-                setState({ ...state, result: calculateResult(state.answers), step: maxSteps });
-                return;
+                setState({ ...state, result: calculateResult(state.answers), step: maxSteps }); return;
               }
-              setState({ ...state, step: 2 });
-              return;
+              setState({ ...state, step: 2 }); return;
             }
             if (state.step === 2) {
-              if (state.answers.fonctionnalitesPME.length > 0 && 
-                  !state.answers.fonctionnalitesPME.includes("aucune")) {
-                setState({ ...state, result: calculateResult(state.answers), step: maxSteps });
-                return;
+              if (state.answers.fonctionnalitesPME.length > 0 && !state.answers.fonctionnalitesPME.includes("aucune")) {
+                setState({ ...state, result: calculateResult(state.answers), step: maxSteps }); return;
               }
-              setState({ ...state, step: 3 });
-              return;
+              setState({ ...state, step: 3 }); return;
             }
             if (state.step === 3) {
-              if (state.answers.facturesAnnuelles > 3600) {
-                setState({ ...state, result: calculateResult(state.answers), step: maxSteps });
-                return;
-              }
-              if (state.answers.comptaDansPL === "oui") {
-                setState({ ...state, result: calculateResult(state.answers), step: maxSteps });
-                return;
-              }
-              setState({ ...state, step: 4 });
-              return;
+              if (state.answers.facturesAnnuelles > 3600) { setState({ ...state, result: calculateResult(state.answers), step: maxSteps }); return; }
+              if (state.answers.comptaDansPL === "oui") { setState({ ...state, result: calculateResult(state.answers), step: maxSteps }); return; }
+              setState({ ...state, step: 4 }); return;
             }
-            if (state.step === 4) {
-              setState({ ...state, step: 5 });
-              return;
-            }
-            if (state.step === 5) {
-              setState({ ...state, result: calculateResult(state.answers), step: maxSteps });
-              return;
-            }
+            if (state.step === 4) { setState({ ...state, step: 5 }); return; }
+            if (state.step === 5) { setState({ ...state, result: calculateResult(state.answers), step: maxSteps }); return; }
           };
 
           const goBack = () => {
             if (state.step === maxSteps) {
-              setState({
-                step: 0,
-                result: null,
-                answers: {
-                  comptaDansPL: "",
-                  nbComptables: 0,
-                  usersGestion: 0,
-                  usersEmployes: 0,
-                  fonctionnalitesPME: [],
-                  facturesAnnuelles: 0,
-                  fonctionnalitesEssentiel: [],
-                  fonctionnalitesPremium: []
-                }
-              });
-              setShowEmailPage(false);
-              return;
+              setState({ step: 0, result: null, answers: { comptaDansPL: "", nbComptables: 0, usersGestion: 0, usersEmployes: 0, fonctionnalitesPME: [], facturesAnnuelles: 0, fonctionnalitesEssentiel: [], fonctionnalitesPremium: [] } });
+              setShowEmailPage(false); return;
             }
             setState({ ...state, step: Math.max(0, state.step - 1) });
           };
@@ -325,12 +187,7 @@
           const canProceed = () => {
             switch (state.step) {
               case 0: return state.answers.comptaDansPL !== "";
-              case 1: 
-                if (state.answers.comptaDansPL === "oui") {
-                  return state.answers.nbComptables > 0 && state.answers.usersGestion > 0;
-                } else {
-                  return state.answers.usersGestion > 0;
-                }
+              case 1: return state.answers.comptaDansPL === "oui" ? state.answers.nbComptables > 0 && state.answers.usersGestion > 0 : state.answers.usersGestion > 0;
               case 2: return state.answers.fonctionnalitesPME.length > 0;
               case 3: return state.answers.facturesAnnuelles > 0;
               case 4: return state.answers.fonctionnalitesEssentiel.length > 0;
@@ -339,42 +196,30 @@
             }
           };
 
-          const getProgressPercentage = () => {
+          const getProgress = () => {
             if (state.step >= maxSteps) return 100;
-            const totalQuestions = state.answers.comptaDansPL === "oui" ? 4 : 6;
-            return Math.round((state.step / totalQuestions) * 100);
+            return Math.round((state.step / (state.answers.comptaDansPL === "oui" ? 4 : 6)) * 100);
           };
 
           const InfoBox = ({ children }) => (
             <div className="rounded-xl p-6 border-2 bg-teal-50" style={{ borderColor: COLORS.border }}>
               <div className="flex items-start gap-3">
-                <Info className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.primary }} />
+                <IconInfo className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: COLORS.primary }} />
                 <div className="flex-1 space-y-2">{children}</div>
               </div>
             </div>
           );
 
           const RadioOption = ({ checked, onChange, label }) => (
-            <label className="flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all hover:border-teal-400 hover:bg-teal-50/50">
-              <input
-                type="radio"
-                checked={checked}
-                onChange={onChange}
-                className="mt-1 w-4 h-4 accent-teal-500"
-              />
+            <label className="flex items-start gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all hover:border-teal-400 hover:bg-teal-50">
+              <input type="radio" checked={checked} onChange={onChange} className="mt-1 w-4 h-4 accent-teal-500" />
               <span className="flex-1 text-slate-700">{label}</span>
             </label>
           );
 
           const UserDropdown = ({ label, value, onChange, disabled = false, description, examples }) => {
-            const options = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "10+"];
-            
-            const handleChange = (e) => {
-              e.preventDefault();
-              const newValue = e.target.value === "10+" ? 11 : parseInt(e.target.value);
-              onChange(newValue);
-            };
-            
+            const options = [0,1,2,3,4,5,6,7,8,9,10,"10+"];
+            const handleChange = (e) => { e.preventDefault(); onChange(e.target.value === "10+" ? 11 : parseInt(e.target.value)); };
             return (
               <div className="space-y-3">
                 <InfoBox>
@@ -384,47 +229,25 @@
                 </InfoBox>
                 <div className="flex items-center justify-between gap-4 p-4 rounded-xl border-2 bg-white" style={{ borderColor: COLORS.border, opacity: disabled ? 0.6 : 1 }}>
                   <span className="font-semibold text-slate-700">{label}</span>
-                  <select
-                    value={value === 11 ? "10+" : value}
-                    onChange={handleChange}
-                    disabled={disabled}
+                  <select value={value === 11 ? "10+" : value} onChange={handleChange} disabled={disabled}
                     className="px-4 py-2 rounded-lg border-2 bg-white text-slate-700 font-semibold cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100"
-                    style={{ borderColor: COLORS.border }}
-                  >
-                    {options.map(opt => (
-                      <option key={opt} value={opt}>{opt}</option>
-                    ))}
+                    style={{ borderColor: COLORS.border }}>
+                    {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                   </select>
                 </div>
-                {disabled && (
-                  <p className="text-sm text-slate-500 flex items-center gap-2">
-                    <Info className="w-4 h-4" />
-                    Non disponible - Comptabilité externalisée
-                  </p>
-                )}
+                {disabled && <p className="text-sm text-slate-500 flex items-center gap-2"><IconInfo className="w-4 h-4" /> Non disponible - Comptabilité externalisée</p>}
               </div>
             );
           };
 
           const FeatureWithTooltip = ({ title, description }) => {
-            const [showTooltip, setShowTooltip] = useState(false);
-
+            const [show, setShow] = useState(false);
             return (
               <li className="flex items-start gap-3 relative">
-                <div 
-                  className="relative"
-                  onMouseEnter={() => setShowTooltip(true)}
-                  onMouseLeave={() => setShowTooltip(false)}
-                >
-                  <Info 
-                    className="w-5 h-5 flex-shrink-0 mt-0.5 cursor-help transition-colors" 
-                    style={{ color: COLORS.primary }}
-                  />
-                  {showTooltip && (
-                    <div 
-                      className="absolute left-0 top-6 w-80 p-4 rounded-lg shadow-xl border-2 bg-white z-50"
-                      style={{ borderColor: COLORS.border }}
-                    >
+                <div className="relative" onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
+                  <IconInfo className="w-5 h-5 flex-shrink-0 mt-0.5 cursor-help" style={{ color: COLORS.primary }} />
+                  {show && (
+                    <div className="absolute left-0 top-6 w-80 p-4 rounded-lg shadow-xl border-2 bg-white z-50" style={{ borderColor: COLORS.border }}>
                       <p className="text-sm text-slate-700 leading-relaxed">{description}</p>
                     </div>
                   )}
@@ -434,258 +257,139 @@
             );
           };
 
+          const pmeFeatures = [
+            { title: "EBICS T", description: "Standard bancaire européen permettant d'initier des virements et prélèvements directement depuis Pennylane vers votre banque, sans passer par un intermédiaire." },
+            { title: "Module intercos et réciprocités", description: "Automatise les transactions entre vos différentes sociétés : factures inter-entités, prêts/emprunts internes, comptes courants d'associés. Génère les écritures comptables dans les deux sociétés simultanément." },
+            { title: "Multi-entités", description: "Gérez plusieurs sociétés juridiques indépendantes depuis une interface unique. Navigation fluide entre entités + tableaux de bord consolidés au niveau groupe." },
+            { title: "Circuits de validation 2+ niveaux", description: "Créez des processus de validation avancés avec 2 validateurs ou plus. Idéal pour les grandes structures nécessitant plusieurs niveaux d'approbation selon les montants ou catégories." },
+            { title: "Demandes d'achat, bon de commande, bon de réception, demandes de paiements", description: "Workflow complet de gestion des achats, de l'expression du besoin jusqu'au paiement fournisseur. Inclut : demandes d'achat, bons de commande, accusés de réception et demandes de paiement avec validation." },
+            { title: "Plan analytique structuré", description: "Analytique avancée avec plusieurs axes d'analyse simultanés (projets, départements, sites...) et structure hiérarchique. Permet un pilotage financier précis par segment d'activité." },
+            { title: "Intégrations spécifiques : Yooz, Salesforce, Agicap, Zeendoc", description: "Synchronisation native avec vos outils professionnels : Yooz (import automatique des factures dématérialisées), Salesforce (sync clients/devis/commandes), Agicap (export des données de trésorerie), Zeendoc (archivage documentaire automatique)." }
+          ];
+
           const renderQuestion = () => {
-            if (state.step === 0) {
-              return (
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <h2 className="text-4xl font-bold text-slate-800">Module comptable</h2>
-                    <p className="text-xl text-slate-600">
-                      La comptabilité est-elle gérée en interne ou externalisée auprès de votre expert comptable ?
-                    </p>
-                  </div>
-                  <div className="space-y-3">
-                    <RadioOption
-                      checked={state.answers.comptaDansPL === "oui"}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, comptaDansPL: "oui" } })}
-                      label="Internalisée, ou au moins une partie (Expert Comptable en révision)"
-                    />
-                    <RadioOption
-                      checked={state.answers.comptaDansPL === "non"}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, comptaDansPL: "non", nbComptables: 0 } })}
-                      label="Externalisée, notre comptabilité est gérée par notre Expert Comptable"
-                    />
-                  </div>
+            if (state.step === 0) return (
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <h2 className="text-4xl font-bold text-slate-800">Module comptable</h2>
+                  <p className="text-xl text-slate-600">La comptabilité est-elle gérée en interne ou externalisée auprès de votre expert comptable ?</p>
                 </div>
-              );
-            }
-
-            if (state.step === 1) {
-              return (
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <h2 className="text-4xl font-bold text-slate-800">
-                      De combien d'utilisateurs par type d'accès avez-vous besoin ?
-                    </h2>
-                    <p className="text-lg text-slate-600">
-                      Un utilisateur ne peut avoir qu'un seul type d'accès
-                    </p>
-                  </div>
-                  
-                  <UserDropdown
-                    label="Utilisateur Comptable"
-                    value={state.answers.nbComptables}
-                    onChange={(val) => setState({ ...state, answers: { ...state.answers, nbComptables: val } })}
-                    disabled={state.answers.comptaDansPL === "non"}
-                    description="Utilisateur ayant accès complet aux modules de Gestion ET de Comptabilité. Peut gérer toute la comptabilité de l'entreprise ainsi que les processus de vente, achat et trésorerie. Rôle réservé aux entreprises en comptabilité internalisée uniquement.<br/><br/><em>L'expert comptable n'est pas à compter parmi ces utilisateurs.</em>"
-                    examples="Exemples : Comptable fournisseurs, Comptable clients, Directeur Comptable, Responsable comptable"
-                  />
-
-                  <UserDropdown
-                    label="Utilisateur Gestion"
-                    value={state.answers.usersGestion}
-                    onChange={(val) => setState({ ...state, answers: { ...state.answers, usersGestion: val } })}
-                    description="Utilisateur ayant accès aux modules Gestion (Ventes, Achats, Transactions, Analytique). Peut gérer la facturation clients/fournisseurs, les opérations bancaires et le pilotage de l'activité."
-                    examples="Exemples : Dirigeant/Admin, Gestionnaire de facturation (clients et/ou fournisseurs)"
-                  />
-
-                  <UserDropdown
-                    label="Utilisateur Employé"
-                    value={state.answers.usersEmployes}
-                    onChange={(val) => setState({ ...state, answers: { ...state.answers, usersEmployes: val } })}
-                    description="Utilisateur ayant accès <strong>UNIQUEMENT</strong> aux notes de frais, carte bancaire Pennylane et demandes d'achat."
-                    examples="Exemples : Commerciaux, Responsables Marketing, Chefs de projet et autres métiers non liés à la comptabilité/gestion"
-                  />
+                <div className="space-y-3">
+                  <RadioOption checked={state.answers.comptaDansPL === "oui"} onChange={() => setState({ ...state, answers: { ...state.answers, comptaDansPL: "oui" } })} label="Internalisée, ou au moins une partie (Expert Comptable en révision)" />
+                  <RadioOption checked={state.answers.comptaDansPL === "non"} onChange={() => setState({ ...state, answers: { ...state.answers, comptaDansPL: "non", nbComptables: 0 } })} label="Externalisée, notre comptabilité est gérée par notre Expert Comptable" />
                 </div>
-              );
-            }
+              </div>
+            );
 
-            if (state.step === 2) {
-              const pmeFeatures = [
-                {
-                  title: "EBICS T",
-                  description: "Standard bancaire européen permettant d'initier des virements et prélèvements directement depuis Pennylane vers votre banque, sans passer par un intermédiaire."
-                },
-                {
-                  title: "Module intercos et réciprocités",
-                  description: "Automatise les transactions entre vos différentes sociétés : factures inter-entités, prêts/emprunts internes, comptes courants d'associés. Génère les écritures comptables dans les deux sociétés simultanément."
-                },
-                {
-                  title: "Multi-entités",
-                  description: "Gérez plusieurs sociétés juridiques indépendantes depuis une interface unique. Navigation fluide entre entités + tableaux de bord consolidés au niveau groupe."
-                },
-                {
-                  title: "Circuits de validation 2+ niveaux",
-                  description: "Créez des processus de validation avancés avec 2 validateurs ou plus. Idéal pour les grandes structures nécessitant plusieurs niveaux d'approbation selon les montants ou catégories."
-                },
-                {
-                  title: "Demandes d'achat, bon de commande, bon de réception, demandes de paiements",
-                  description: "Workflow complet de gestion des achats, de l'expression du besoin jusqu'au paiement fournisseur. Inclut : demandes d'achat, bons de commande, accusés de réception et demandes de paiement avec validation."
-                },
-                {
-                  title: "Plan analytique structuré",
-                  description: "Analytique avancée avec plusieurs axes d'analyse simultanés (projets, départements, sites...) et structure hiérarchique. Permet un pilotage financier précis par segment d'activité."
-                },
-                {
-                  title: "Intégrations spécifiques : Yooz, Salesforce, Agicap, Zeendoc",
-                  description: "Synchronisation native avec vos outils professionnels : Yooz (import automatique des factures dématérialisées), Salesforce (sync clients/devis/commandes), Agicap (export des données de trésorerie), Zeendoc (archivage documentaire automatique)."
-                }
-              ];
-
-              return (
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <h2 className="text-4xl font-bold text-slate-800">Fonctionnalités avancées PME</h2>
-                    <p className="text-xl text-slate-600">
-                      Votre client a-t-il besoin d'au moins une de ces fonctionnalités avancées ?
-                    </p>
-                    <Badge className="text-sm px-3 py-1 bg-emerald-100 text-emerald-700">
-                      Disponible uniquement avec l'offre PME sur mesure
-                    </Badge>
-                    <div className="rounded-xl p-5 border-2 bg-white" style={{ borderColor: COLORS.border }}>
-                      <ul className="space-y-3">
-                        {pmeFeatures.map((feature, i) => (
-                          <FeatureWithTooltip
-                            key={i}
-                            title={feature.title}
-                            description={feature.description}
-                          />
-                        ))}
-                      </ul>
+            if (state.step === 1) return (
+              <div className="space-y-8">
+                <h2 className="text-4xl font-bold text-slate-800">De combien d'utilisateurs par type d'accès avez-vous besoin ?</h2>
+                <UserDropdown label="Utilisateur Comptable" value={state.answers.nbComptables}
+                  onChange={(val) => setState({ ...state, answers: { ...state.answers, nbComptables: val } })}
+                  disabled={state.answers.comptaDansPL === "non"}
+                  description="Utilisateur ayant accès complet aux modules de Gestion ET de Comptabilité. Peut gérer toute la comptabilité de l'entreprise ainsi que les processus de vente, achat et trésorerie. Rôle réservé aux entreprises en comptabilité internalisée uniquement.<br/><br/><strong>L'Utilisateur Comptable est compté comme un Utilisateur Gestion dans le décompte de vos accès.</strong><br/><br/><em>L'expert comptable n'est pas à compter parmi ces utilisateurs.</em>"
+                  examples="Exemples : Comptable fournisseurs, Comptable clients, Directeur Comptable, Responsable comptable" />
+                <UserDropdown label="Utilisateur Gestion" value={state.answers.usersGestion}
+                  onChange={(val) => setState({ ...state, answers: { ...state.answers, usersGestion: val } })}
+                  description="Utilisateur ayant accès aux modules Gestion (Ventes, Achats, Transactions, Analytique). Peut gérer la facturation clients/fournisseurs, les opérations bancaires et le pilotage de l'activité."
+                  examples="Exemples : Dirigeant/Admin, Gestionnaire de facturation (clients et/ou fournisseurs)" />
+                <UserDropdown label="Utilisateur Employé" value={state.answers.usersEmployes}
+                  onChange={(val) => setState({ ...state, answers: { ...state.answers, usersEmployes: val } })}
+                  description="Utilisateur ayant accès <strong>UNIQUEMENT</strong> aux notes de frais, carte bancaire Pennylane et demandes d'achat."
+                  examples="Exemples : Commerciaux, Responsables Marketing, Chefs de projet et autres métiers non liés à la comptabilité/gestion" />
+                {state.answers.comptaDansPL === "oui" && (
+                  <div className="rounded-xl border-2 bg-white" style={{ borderColor: COLORS.border }}>
+                    <div className="px-6 py-3 border-b" style={{ borderColor: COLORS.border }}>
+                      <p className="text-xs font-semibold uppercase tracking-widest text-slate-400">Récapitulatif de vos accès</p>
+                    </div>
+                    <div className="px-6 py-4 space-y-4">
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-1">
+                          <p className="font-semibold text-slate-800">Utilisateurs Gestion</p>
+                          <p className="text-sm text-slate-500 flex items-center gap-2">
+                            <span className="inline-block w-3 h-px bg-slate-300"></span>
+                            Dont Utilisateurs Comptables Interne : <span className="font-semibold text-slate-700">{state.answers.nbComptables}</span>
+                          </p>
+                        </div>
+                        <span className="text-2xl font-bold text-slate-800">{state.answers.nbComptables + state.answers.usersGestion}</span>
+                      </div>
+                      <div className="border-t pt-4 flex items-center justify-between" style={{ borderColor: COLORS.border }}>
+                        <p className="font-semibold text-slate-800">Utilisateurs Employé</p>
+                        <span className="text-2xl font-bold text-slate-800">{state.answers.usersEmployes}</span>
+                      </div>
                     </div>
                   </div>
-                  <div className="space-y-3">
-                    <RadioOption
-                      checked={state.answers.fonctionnalitesPME.includes("needsPME")}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPME: ["needsPME"] } })}
-                      label="Oui, besoin d'au moins une de ces fonctionnalités"
-                    />
-                    <RadioOption
-                      checked={state.answers.fonctionnalitesPME.includes("aucune")}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPME: ["aucune"] } })}
-                      label="Non, aucune de ces fonctionnalités n'est nécessaire"
-                    />
+                )}
+              </div>
+            );
+
+            if (state.step === 2) return (
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <h2 className="text-4xl font-bold text-slate-800">Fonctionnalités avancées PME</h2>
+                  <p className="text-xl text-slate-600">Votre client a-t-il besoin d'au moins une de ces fonctionnalités avancées ?</p>
+                  <Badge className="text-sm px-3 py-1 bg-emerald-100 text-emerald-700">Disponible uniquement avec l'offre PME sur mesure</Badge>
+                  <div className="rounded-xl p-5 border-2 bg-white" style={{ borderColor: COLORS.border }}>
+                    <ul className="space-y-3">{pmeFeatures.map((f, i) => <FeatureWithTooltip key={i} title={f.title} description={f.description} />)}</ul>
                   </div>
                 </div>
-              );
-            }
+                <div className="space-y-3">
+                  <RadioOption checked={state.answers.fonctionnalitesPME.includes("needsPME")} onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPME: ["needsPME"] } })} label="Oui, besoin d'au moins une de ces fonctionnalités" />
+                  <RadioOption checked={state.answers.fonctionnalitesPME.includes("aucune")} onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPME: ["aucune"] } })} label="Non, aucune de ces fonctionnalités n'est nécessaire" />
+                </div>
+              </div>
+            );
 
-            if (state.step === 3) {
-              return (
-                <div className="space-y-6">
-                  <div className="space-y-4">
-                    <h2 className="text-4xl font-bold text-slate-800">Volume de factures</h2>
-                    <p className="text-xl text-slate-600">
-                      Quelle est la volumétrie annuelle de factures (achats + ventes + notes de frais) ?
-                    </p>
-                  </div>
-                  <div className="space-y-3">
-                    {[
-                      { value: 600, label: "0 à 1 200 factures/an (≈ 0-100/mois)" },
-                      { value: 1800, label: "1 200 à 2 400 factures/an (≈ 100-200/mois)" },
-                      { value: 3000, label: "2 400 à 3 600 factures/an (≈ 200-300/mois)" },
-                      { value: 4000, label: "Plus de 3 600 factures/an (≈ 300+/mois)" }
-                    ].map((option) => (
-                      <RadioOption
-                        key={option.value}
-                        checked={state.answers.facturesAnnuelles === option.value}
-                        onChange={() => setState({ ...state, answers: { ...state.answers, facturesAnnuelles: option.value } })}
-                        label={option.label}
-                      />
-                    ))}
+            if (state.step === 3) return (
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h2 className="text-4xl font-bold text-slate-800">Volume de factures</h2>
+                  <p className="text-xl text-slate-600">Quelle est la volumétrie annuelle de factures (achats + ventes + notes de frais) ?</p>
+                </div>
+                <div className="space-y-3">
+                  {[{value:600,label:"0 à 1 200 factures/an (≈ 0-100/mois)"},{value:1800,label:"1 200 à 2 400 factures/an (≈ 100-200/mois)"},{value:3000,label:"2 400 à 3 600 factures/an (≈ 200-300/mois)"},{value:4000,label:"Plus de 3 600 factures/an (≈ 300+/mois)"}]
+                    .map(o => <RadioOption key={o.value} checked={state.answers.facturesAnnuelles === o.value} onChange={() => setState({ ...state, answers: { ...state.answers, facturesAnnuelles: o.value } })} label={o.label} />)}
+                </div>
+              </div>
+            );
+
+            if (state.step === 4) return (
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <h2 className="text-4xl font-bold text-slate-800">Fonctionnalités du Module Gestion</h2>
+                  <p className="text-xl text-slate-600">Votre client a-t-il besoin d'au moins une de ces fonctionnalités ?</p>
+                  <Badge className="text-sm px-3 py-1 bg-emerald-100 text-emerald-700">Disponible uniquement à partir du plan Essentiel</Badge>
+                  <div className="rounded-xl p-5 border-2 bg-white" style={{ borderColor: COLORS.border }}>
+                    <ul className="space-y-3">{["Relances automatiques des factures impayées","Factures récurrentes / Abonnements clients","Intégrations clé-en-main (Shopify, Sellsy, +150 outils)","Notes de frais avec indemnités kilométriques","Analytique et prévisionnel de trésorerie"].map((f,i) => (
+                      <li key={i} className="flex items-start gap-3"><IconCheck className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} /><span className="text-slate-700"><strong>{f}</strong></span></li>
+                    ))}</ul>
                   </div>
                 </div>
-              );
-            }
+                <div className="space-y-3">
+                  <RadioOption checked={state.answers.fonctionnalitesEssentiel.includes("needsEssentiel")} onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesEssentiel: ["needsEssentiel"] } })} label="Oui, besoin d'au moins une de ces fonctionnalités" />
+                  <RadioOption checked={state.answers.fonctionnalitesEssentiel.includes("aucune")} onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesEssentiel: ["aucune"] } })} label="Non, ces fonctionnalités ne sont pas nécessaires" />
+                </div>
+              </div>
+            );
 
-            if (state.step === 4) {
-              return (
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <h2 className="text-4xl font-bold text-slate-800">Fonctionnalités du Module Gestion</h2>
-                    <p className="text-xl text-slate-600">
-                      Votre client a-t-il besoin d'au moins une de ces fonctionnalités ?
-                    </p>
-                    <Badge className="text-sm px-3 py-1 bg-emerald-100 text-emerald-700">
-                      Disponible uniquement à partir du plan Essentiel
-                    </Badge>
-                    <div className="rounded-xl p-5 border-2 bg-white" style={{ borderColor: COLORS.border }}>
-                      <ul className="space-y-3">
-                        {[
-                          "Relances automatiques des factures impayées",
-                          "Factures récurrentes / Abonnements clients",
-                          "Intégrations clé-en-main (Shopify, Sellsy, +150 outils)",
-                          "Notes de frais avec indemnités kilométriques",
-                          "Analytique et prévisionnel de trésorerie"
-                        ].map((f, i) => (
-                          <li key={i} className="flex items-start gap-3">
-                            <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                            <span className="text-slate-700"><strong>{f}</strong></span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <RadioOption
-                      checked={state.answers.fonctionnalitesEssentiel.includes("needsEssentiel")}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesEssentiel: ["needsEssentiel"] } })}
-                      label="Oui, besoin d'au moins une de ces fonctionnalités"
-                    />
-                    <RadioOption
-                      checked={state.answers.fonctionnalitesEssentiel.includes("aucune")}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesEssentiel: ["aucune"] } })}
-                      label="Non, ces fonctionnalités ne sont pas nécessaires"
-                    />
+            if (state.step === 5) return (
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <h2 className="text-4xl font-bold text-slate-800">Fonctionnalités du Module Gestion</h2>
+                  <p className="text-xl text-slate-600">Votre client a-t-il besoin d'au moins une de ces fonctionnalités ?</p>
+                  <Badge className="text-sm px-3 py-1 bg-emerald-100 text-emerald-700">Disponible uniquement à partir du plan Premium</Badge>
+                  <div className="rounded-xl p-5 border-2 bg-white" style={{ borderColor: COLORS.border }}>
+                    <ul className="space-y-3">{["Circuits de validation des achats (workflows d'approbation)","Rapports analytiques avancés (ventilation multi-axes)","Data Sharing (exports vers Power BI, Tableau, Excel)","Tableaux de bords personnalisables avec KPI","Rapports comptables (Grand Livre, Balances, P&L)"].map((f,i) => (
+                      <li key={i} className="flex items-start gap-3"><IconCheck className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} /><span className="text-slate-700"><strong>{f}</strong></span></li>
+                    ))}</ul>
                   </div>
                 </div>
-              );
-            }
-
-            if (state.step === 5) {
-              return (
-                <div className="space-y-8">
-                  <div className="space-y-4">
-                    <h2 className="text-4xl font-bold text-slate-800">Fonctionnalités du Module Gestion</h2>
-                    <p className="text-xl text-slate-600">
-                      Votre client a-t-il besoin d'au moins une de ces fonctionnalités ?
-                    </p>
-                    <Badge className="text-sm px-3 py-1 bg-emerald-100 text-emerald-700">
-                      Disponible uniquement à partir du plan Premium
-                    </Badge>
-                    <div className="rounded-xl p-5 border-2 bg-white" style={{ borderColor: COLORS.border }}>
-                      <ul className="space-y-3">
-                        {[
-                          "Circuits de validation des achats (workflows d'approbation)",
-                          "Rapports analytiques avancés (ventilation multi-axes)",
-                          "Data Sharing (exports vers Power BI, Tableau, Excel)",
-                          "Tableaux de bords personnalisables avec KPI",
-                          "Rapports comptables (Grand Livre, Balances, P&L)"
-                        ].map((f, i) => (
-                          <li key={i} className="flex items-start gap-3">
-                            <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                            <span className="text-slate-700"><strong>{f}</strong></span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className="space-y-3">
-                    <RadioOption
-                      checked={state.answers.fonctionnalitesPremium.includes("needsPremium")}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPremium: ["needsPremium"] } })}
-                      label="Oui, besoin d'au moins une de ces fonctionnalités"
-                    />
-                    <RadioOption
-                      checked={state.answers.fonctionnalitesPremium.includes("aucune")}
-                      onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPremium: ["aucune"] } })}
-                      label="Non, ces fonctionnalités ne sont pas nécessaires"
-                    />
-                  </div>
+                <div className="space-y-3">
+                  <RadioOption checked={state.answers.fonctionnalitesPremium.includes("needsPremium")} onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPremium: ["needsPremium"] } })} label="Oui, besoin d'au moins une de ces fonctionnalités" />
+                  <RadioOption checked={state.answers.fonctionnalitesPremium.includes("aucune")} onChange={() => setState({ ...state, answers: { ...state.answers, fonctionnalitesPremium: ["aucune"] } })} label="Non, ces fonctionnalités ne sont pas nécessaires" />
                 </div>
-              );
-            }
-
+              </div>
+            );
             return null;
           };
 
@@ -693,67 +397,37 @@
             if (!state.result) return null;
             const isPME = state.result.plan === "PME sur mesure";
             const emailSubject = `Demande de devis - Plan ${state.result.plan}`;
-            const emailBody = isPME 
-              ? `Bonjour Jules,\n\nJe souhaite obtenir un devis personnalisé pour l'offre PME sur mesure de Pennylane.\n\n📋 CONTEXTE DU BESOIN\nSuite à ma simulation, mon client nécessite une solution sur mesure dépassant les plans standards.\n\n📝 INFORMATIONS POUR LE DEVIS\nMerci de me recontacter pour échanger sur ce projet.\n\nSIGNATAIRE DU DEVIS\n- Nom : [À COMPLÉTER]\n- Prénom : [À COMPLÉTER]\n- Email : [À COMPLÉTER]\n- Téléphone : [À COMPLÉTER]\n\nENTREPRISE\n- Nom de l'entreprise : [À COMPLÉTER]\n- SIREN : [À COMPLÉTER]\n- Secteur d'activité : [À COMPLÉTER]\n- Effectif : [À COMPLÉTER]\n\n📞 Disponibilités pour un rendez-vous :\n- [À COMPLÉTER]\n\nCordialement`
-              : `Bonjour Jules,\n\nJe souhaite obtenir un devis pour le plan ${state.result.plan}.\n\n📋 DÉTAILS DU SIMULATEUR\n- Plan recommandé : ${state.result.plan}\n- Prix indicatif : ${state.result.prix}€/mois HT\n- Utilisateurs : ${state.result.usersIncluded}\n- Factures : ${state.result.facturesMax}\n\n📝 COMPLÉTEZ VOS INFORMATIONS CI-DESSOUS\nMerci de remplir les champs suivants avant d'envoyer votre demande :\n\nSIGNATAIRE DU DEVIS\n- Nom : [À COMPLÉTER]\n- Prénom : [À COMPLÉTER]\n- Email : [À COMPLÉTER]\n\nENTREPRISE\n- Nom de l'entreprise : [À COMPLÉTER]\n- SIREN : [À COMPLÉTER]\n\nCordialement`;
-
-            const copyToClipboard = () => {
-              navigator.clipboard.writeText(emailBody).then(() => {
-                setEmailCopied(true);
-                setTimeout(() => setEmailCopied(false), 3000);
-              });
-            };
-
+            const emailBody = isPME
+              ? `Bonjour Jules,\n\nJe souhaite obtenir un devis personnalisé pour l'offre PME sur mesure de Pennylane.\n\nSIGNATAIRE DU DEVIS\n- Nom : [À COMPLÉTER]\n- Prénom : [À COMPLÉTER]\n- Email : [À COMPLÉTER]\n- Téléphone : [À COMPLÉTER]\n\nENTREPRISE\n- Nom de l'entreprise : [À COMPLÉTER]\n- SIREN : [À COMPLÉTER]\n- Secteur d'activité : [À COMPLÉTER]\n- Effectif : [À COMPLÉTER]\n\nCordialement`
+              : `Bonjour Jules,\n\nJe souhaite obtenir un devis pour le plan ${state.result.plan}.\n\nPlan recommandé : ${state.result.plan}\nPrix indicatif : ${state.result.prix}€/mois HT\nUtilisateurs : ${state.result.usersIncluded}\nFactures : ${state.result.facturesMax}\n\nSIGNATAIRE DU DEVIS\n- Nom : [À COMPLÉTER]\n- Prénom : [À COMPLÉTER]\n- Email : [À COMPLÉTER]\n\nENTREPRISE\n- Nom de l'entreprise : [À COMPLÉTER]\n- SIREN : [À COMPLÉTER]\n\nCordialement`;
             return (
               <div className="space-y-6">
                 <div className="text-center space-y-4">
                   <div className="text-6xl mb-4">📧</div>
                   <h2 className="text-4xl font-bold text-slate-800">Demande de devis</h2>
-                  <p className="text-xl text-slate-600">
-                    Pour obtenir votre devis personnalisé pour le plan <strong>{state.result.plan}</strong>
-                  </p>
+                  <p className="text-xl text-slate-600">Pour obtenir votre devis pour le plan <strong>{state.result.plan}</strong></p>
                 </div>
                 <Card>
                   <CardContent className="p-8 space-y-6">
-                    <div>
-                      <p className="text-lg mb-4 font-semibold text-center text-slate-800">
-                        📋 Message à copier et envoyer par email
-                      </p>
-                      <div className="rounded-xl p-6 border-2 mb-4 font-mono text-sm whitespace-pre-wrap bg-slate-50 text-slate-700" style={{ borderColor: COLORS.border }}>
-                        <div className="mb-4 pb-4 border-b-2 border-slate-200">
-                          <p><strong>À :</strong> jules.prevosteau@pennylane.com</p>
-                          <p><strong>Objet :</strong> {emailSubject}</p>
-                        </div>
-                        {emailBody}
+                    <div className="rounded-xl p-6 border-2 mb-4 font-mono text-sm whitespace-pre-wrap bg-slate-50 text-slate-700" style={{ borderColor: COLORS.border }}>
+                      <div className="mb-4 pb-4 border-b-2 border-slate-200">
+                        <p><strong>À :</strong> jules.prevosteau@pennylane.com</p>
+                        <p><strong>Objet :</strong> {emailSubject}</p>
                       </div>
-                      <Button 
-                        onClick={copyToClipboard} 
-                        variant="outline"
-                        className="w-full font-semibold text-lg"
-                      >
-                        {emailCopied ? '✓ Message copié !' : '📋 Copier le message'}
-                      </Button>
+                      {emailBody}
                     </div>
-                    <div className="text-center pt-4">
-                      <Button
-                        onClick={() => {
-                          window.location.href = `mailto:jules.prevosteau@pennylane.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
-                        }}
-                        className="w-full font-semibold text-lg text-white"
-                        style={{ backgroundColor: COLORS.primary, color: COLORS.background }}
-                      >
-                        📨 Envoyer un email à jules.prevosteau@pennylane.com
-                      </Button>
-                    </div>
+                    <Button onClick={() => { navigator.clipboard.writeText(emailBody).then(() => { setEmailCopied(true); setTimeout(() => setEmailCopied(false), 3000); }); }} variant="outline" className="w-full font-semibold text-lg">
+                      {emailCopied ? '✓ Message copié !' : '📋 Copier le message'}
+                    </Button>
+                    <Button onClick={() => { window.location.href = `mailto:jules.prevosteau@pennylane.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`; }}
+                      className="w-full font-semibold text-lg" style={{ backgroundColor: COLORS.primary, color: COLORS.background }}>
+                      📨 Envoyer un email à jules.prevosteau@pennylane.com
+                    </Button>
                   </CardContent>
                 </Card>
                 <div className="flex gap-4">
-                  <Button onClick={() => setShowEmailPage(false)} variant="outline" className="flex-1 font-semibold text-lg">
-                    ← Retour au résultat
-                  </Button>
-                  <Button onClick={goBack} variant="outline" className="flex-1 font-semibold text-lg">
-                    Recommencer
-                  </Button>
+                  <Button onClick={() => setShowEmailPage(false)} variant="outline" className="flex-1 font-semibold text-lg">← Retour au résultat</Button>
+                  <Button onClick={goBack} variant="outline" className="flex-1 font-semibold text-lg">Recommencer</Button>
                 </div>
               </div>
             );
@@ -762,121 +436,63 @@
           const renderResult = () => {
             if (!state.result) return null;
             const isPME = state.result.plan === "PME sur mesure";
-
             return (
               <div className="space-y-6">
                 <div className="text-center space-y-4">
-                  <CheckCircle2 className="w-20 h-20 mx-auto text-emerald-500" />
+                  <IconCheck className="w-20 h-20 mx-auto text-emerald-500" />
                   <h2 className="text-4xl font-bold text-slate-800">Plan recommandé</h2>
-                  <Badge className="text-xl px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
-                    {state.result.plan}
-                  </Badge>
+                  <Badge className="text-xl px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white">{state.result.plan}</Badge>
                 </div>
-
                 <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Sparkles className="w-5 h-5" />
-                      Détails de l'offre
-                    </CardTitle>
-                  </CardHeader>
+                  <CardHeader><CardTitle className="flex items-center gap-2"><IconSparkles className="w-5 h-5" /> Détails de l'offre</CardTitle></CardHeader>
                   <CardContent className="space-y-6">
                     {!isPME && (
                       <>
                         <div className="text-center py-8 rounded-2xl border-2 shadow-lg" style={{ backgroundColor: COLORS.lightBg, borderColor: COLORS.border }}>
-                          <div className="text-7xl font-black mb-3" style={{ color: COLORS.primary }}>
-                            {state.result.prix}€
-                          </div>
+                          <div className="text-7xl font-black mb-3" style={{ color: COLORS.primary }}>{state.result.prix}€</div>
                           <div className="font-semibold text-lg text-slate-700">HT / mois - Sans engagement</div>
                         </div>
                         <div className="p-6 rounded-xl border-2 bg-white" style={{ borderColor: COLORS.border }}>
-                          <div className="font-bold text-xl mb-4 flex items-center gap-3 text-slate-800">
-                            <TrendingUp className="w-6 h-6" style={{ color: COLORS.primary }} />
-                            Ce plan d'abonnement inclut :
-                          </div>
+                          <div className="font-bold text-xl mb-4 flex items-center gap-3 text-slate-800"><IconTrending className="w-6 h-6" style={{ color: COLORS.primary }} />Ce plan d'abonnement inclut :</div>
                           <ul className="space-y-3">
                             {state.result.usersIncluded.split(", ").map((u, i) => (
-                              <li key={i} className="flex items-start gap-3">
-                                <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                                <span className="text-slate-700">{u}</span>
-                              </li>
+                              <li key={i} className="flex items-start gap-3"><IconCheck className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} /><span className="text-slate-700">{u}</span></li>
                             ))}
-                            <li className="flex items-start gap-3">
-                              <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                              <span className="text-slate-700">Maximum {state.result.facturesMax}</span>
-                            </li>
+                            <li className="flex items-start gap-3"><IconCheck className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} /><span className="text-slate-700">Maximum {state.result.facturesMax}</span></li>
                           </ul>
                         </div>
                       </>
                     )}
-
                     {isPME && (
                       <div className="p-8 rounded-2xl border-2 shadow-lg" style={{ backgroundColor: COLORS.lightBg, borderColor: COLORS.border }}>
                         <div className="flex items-center gap-4 mb-4">
-                          <Building2 className="w-10 h-10" style={{ color: COLORS.primary }} />
-                          <div>
-                            <div className="font-bold text-xl text-slate-800">Tarification sur devis</div>
-                            <div className="font-semibold text-lg text-slate-600">Solution entreprise personnalisée</div>
-                          </div>
+                          <IconBuilding className="w-10 h-10" style={{ color: COLORS.primary }} />
+                          <div><div className="font-bold text-xl text-slate-800">Tarification sur devis</div><div className="font-semibold text-lg text-slate-600">Solution entreprise personnalisée</div></div>
                         </div>
-                        <p className="text-base leading-relaxed mb-6 text-slate-700">
-                          Votre client a des <strong>besoins qui dépassent les plans standards</strong>.
-                          <br /><br />
-                          Notre <strong>équipe commerciale</strong> établira une <strong>offre modulaire</strong> adaptée à ses <strong>spécificités</strong>.
-                        </p>
+                        <p className="text-base leading-relaxed mb-6 text-slate-700">Votre client a des <strong>besoins qui dépassent les plans standards</strong>.<br/><br/>Notre <strong>équipe commerciale</strong> établira une <strong>offre modulaire</strong> adaptée à ses <strong>spécificités</strong>.</p>
                         <div className="pt-4 border-t-2" style={{ borderColor: COLORS.border }}>
-                          <div className="font-bold text-xl mb-4 flex items-center gap-3 text-slate-800">
-                            <Sparkles className="w-6 h-6" style={{ color: COLORS.primary }} />
-                            Avantages exclusifs PME
-                          </div>
+                          <div className="font-bold text-xl mb-4 flex items-center gap-3 text-slate-800"><IconSparkles className="w-6 h-6" style={{ color: COLORS.primary }} />Avantages exclusifs PME</div>
                           <ul className="space-y-3">
-                            <li className="flex items-start gap-3">
-                              <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                              <span className="text-slate-700"><strong>Utilisateurs gestion et employés illimités</strong></span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                              <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                              <span className="text-slate-700"><strong>Modules à la carte</strong> selon vos besoins</span>
-                            </li>
-                            <li className="flex items-start gap-3">
-                              <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                              <span className="text-slate-700"><strong>Account Manager dédié</strong> et accompagnement personnalisé</span>
-                            </li>
+                            {["Utilisateurs gestion et employés illimités","Modules à la carte selon vos besoins","Account Manager dédié et accompagnement personnalisé"].map((f,i) => (
+                              <li key={i} className="flex items-start gap-3"><IconCheck className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} /><span className="text-slate-700"><strong>{f}</strong></span></li>
+                            ))}
                           </ul>
                         </div>
                       </div>
                     )}
-
                     {!isPME && state.result.fonctionnalites.length > 0 && (
                       <div className="p-6 rounded-xl border-2" style={{ backgroundColor: COLORS.lightBg, borderColor: COLORS.border }}>
-                        <div className="font-bold text-xl mb-4 flex items-center gap-3 text-slate-800">
-                          <Sparkles className="w-6 h-6" style={{ color: COLORS.primary }} />
-                          Fonctionnalités principales
-                        </div>
-                        <ul className="space-y-3">
-                          {state.result.fonctionnalites.map((f, i) => (
-                            <li key={i} className="flex items-start gap-3">
-                              <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} />
-                              <span className="text-slate-700">{f}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        <div className="font-bold text-xl mb-4 flex items-center gap-3 text-slate-800"><IconSparkles className="w-6 h-6" style={{ color: COLORS.primary }} />Fonctionnalités principales</div>
+                        <ul className="space-y-3">{state.result.fonctionnalites.map((f,i) => (
+                          <li key={i} className="flex items-start gap-3"><IconCheck className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: COLORS.primary }} /><span className="text-slate-700">{f}</span></li>
+                        ))}</ul>
                       </div>
                     )}
                   </CardContent>
                 </Card>
-
                 <div className="flex gap-4">
-                  <Button onClick={goBack} variant="outline" className="flex-1 font-semibold text-lg">
-                    Recommencer
-                  </Button>
-                  <Button 
-                    onClick={() => setShowEmailPage(true)} 
-                    className="flex-1 font-semibold text-lg text-white"
-                    style={{ backgroundColor: COLORS.primary, color: COLORS.background }}
-                  >
-                    Obtenir un devis
-                  </Button>
+                  <Button onClick={goBack} variant="outline" className="flex-1 font-semibold text-lg">Recommencer</Button>
+                  <Button onClick={() => setShowEmailPage(true)} className="flex-1 font-semibold text-lg" style={{ backgroundColor: COLORS.primary, color: COLORS.background }}>Obtenir un devis</Button>
                 </div>
               </div>
             );
@@ -889,93 +505,58 @@
                   <div className="inline-block mb-6">
                     <div className="flex items-center gap-3 px-6 py-3 bg-white rounded-xl shadow-md">
                       <svg width="36" height="36" viewBox="0 0 100 100" fill="none">
-                        <circle cx="40" cy="50" r="25" fill="#00F872" />
-                        <circle cx="60" cy="50" r="25" fill="#006666" />
+                        <circle cx="40" cy="50" r="25" fill="#00F872"/>
+                        <circle cx="60" cy="50" r="25" fill="#006666"/>
                       </svg>
                       <span className="font-bold text-2xl text-slate-700">pennylane</span>
                     </div>
                   </div>
-                  <h1 className="text-5xl font-bold mb-4 text-slate-800">
-                    Quel plan d'abonnement choisir ?
-                  </h1>
-                  <p className="text-lg max-w-3xl mx-auto leading-relaxed text-slate-600">
-                    Grâce à ce simulateur, trouvez en quelques questions le plan d'abonnement adapté aux besoins de votre client
-                  </p>
+                  <h1 className="text-5xl font-bold mb-4 text-slate-800">Quel plan d'abonnement choisir ?</h1>
+                  <p className="text-lg max-w-3xl mx-auto leading-relaxed text-slate-600">Grâce à ce simulateur, trouvez en quelques questions le plan d'abonnement adapté aux besoins de votre client</p>
                 </div>
-
                 {state.step < maxSteps && (
                   <div className="mb-10">
                     <div className="flex justify-between text-base font-semibold mb-4 text-slate-600">
                       <span className="flex items-center gap-3">
-                        <span 
-                          className="w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold" 
-                          style={{ backgroundColor: COLORS.primary }}
-                        >
+                        <span className="w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold" style={{ backgroundColor: COLORS.primary, color: COLORS.background }}>
                           {Math.min(state.step + 1, 6)}
                         </span>
                         Question {Math.min(state.step + 1, 6)} / 6
                       </span>
-                      <span className="font-bold" style={{ color: COLORS.primary }}>
-                        {getProgressPercentage()}%
-                      </span>
+                      <span className="font-bold" style={{ color: COLORS.primary }}>{getProgress()}%</span>
                     </div>
                     <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full transition-all duration-500 rounded-full"
-                        style={{ width: `${getProgressPercentage()}%`, backgroundColor: COLORS.primary }}
-                      />
+                      <div className="h-full transition-all duration-500 rounded-full" style={{ width: `${getProgress()}%`, backgroundColor: COLORS.primary }} />
                     </div>
                   </div>
                 )}
-
                 <Card className="shadow-2xl border-2" style={{ borderColor: COLORS.border }}>
                   <CardContent className="p-10 md:p-12">
-                    {state.step < maxSteps 
-                      ? renderQuestion() 
-                      : (showEmailPage ? renderEmailPage() : renderResult())
-                    }
-
+                    {state.step < maxSteps ? renderQuestion() : (showEmailPage ? renderEmailPage() : renderResult())}
                     {state.step < maxSteps && (
                       <div className="flex gap-3 mt-8">
                         {state.step > 0 && (
-                          <Button 
-                            onClick={goBack} 
-                            variant="outline"
-                            className="flex items-center justify-center gap-2"
-                          >
-                            <ArrowLeft className="w-4 h-4" />
-                            Retour
+                          <Button onClick={goBack} variant="outline" className="flex items-center justify-center gap-2">
+                            <IconArrowLeft className="w-4 h-4" /> Retour
                           </Button>
                         )}
-                        <Button
-                          onClick={goNext}
-                          disabled={!canProceed()}
-                          className="flex-1 flex items-center justify-center gap-2"
-                          style={{ 
-                            backgroundColor: canProceed() ? COLORS.primary : '#e5e7eb',
-                            color: canProceed() ? COLORS.background : '#9ca3af'
-                          }}
-                        >
-                          Suivant
-                          <ArrowRight className="w-4 h-4" />
+                        <Button onClick={goNext} disabled={!canProceed()} className="flex-1 flex items-center justify-center gap-2"
+                          style={{ backgroundColor: canProceed() ? COLORS.primary : '#e5e7eb', color: canProceed() ? COLORS.background : '#9ca3af' }}>
+                          Suivant <IconArrowRight className="w-4 h-4" />
                         </Button>
                       </div>
                     )}
                   </CardContent>
                 </Card>
-
                 <div className="text-center mt-8 text-sm text-slate-500">
-                  <p className="font-medium">
-                    Simulateur Partenaires Prescripteurs - Quel plan d'abonnement choisir ?
-                  </p>
+                  <p className="font-medium">Simulateur Partenaires Prescripteurs - Quel plan d'abonnement choisir ?</p>
                 </div>
               </div>
             </div>
           );
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<SimulateurPlanPennylane />);
+        ReactDOM.createRoot(document.getElementById('root')).render(<SimulateurPlanPennylane />);
     </script>
 </body>
 </html>
